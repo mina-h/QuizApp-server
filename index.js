@@ -22,57 +22,62 @@ const generateQuestions = (data, num) => {
   let questions = [
     {
       number: 1,
+      name: q1.name,
       question: q1.flag,
       answer: q1.capital,
       options: [
         q1.capital,
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
       ]
     },
     {
       number: 2,
+      name: q2.name,
       question: q2.flag,
       answer: q2.capital,
       options: [
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
         q2.capital,
-        data[randomInteger(1,50)].capital,
+        data[randomInteger(1,num)].capital,
       ]
     },
     {
       number: 3,
+      name: q3.name,
       question: q3.flag,
       answer: q3.capital,
       options: [
         q3.capital,
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
       ]
     },
     {
       number: 4,
+      name: q4.name,
       question: q4.flag,
       answer: q4.capital,
       options: [
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
         q4.capital,
       ]
     },
     {
       number: 5,
+      name: q5.name,
       question: q5.flag,
       answer: q5.capital,
       options: [
-        data[randomInteger(1,50)].capital,
+        data[randomInteger(1,num)].capital,
         q5.capital,
-        data[randomInteger(1,50)].capital,
-        data[randomInteger(1,50)].capital,
+        data[randomInteger(1,num)].capital,
+        data[randomInteger(1,num)].capital,
       ]
     }
   ]
@@ -86,6 +91,7 @@ app.get('/api', (req, res) => {
     const fetchFromRestCountry = async (url) => {
       const response = await fetch(url);
       const fetchedData = await response.json();
+      // console.log(fetchedData);
 
       let questions = [];
 
@@ -98,9 +104,11 @@ app.get('/api', (req, res) => {
       } else if (req.query.continent.toLowerCase() === 'americas'){
         questions = generateQuestions(fetchedData, 50);
       } else if (req.query.continent.toLowerCase() === 'oceania'){
-        questions = generateQuestions(fetchedData, 20);
+        questions = generateQuestions(fetchedData, 10);
+      } else {
+        questions = [{status: "error", message: "Please enter a continent"}]
       }
-      
+      console.log(questions);
       res.send(questions);
     
     }
